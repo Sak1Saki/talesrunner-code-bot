@@ -13,7 +13,7 @@ on:
         default: test
       url:
         description: "ลิงก์ไลฟ์เก่า (ใช้กับ test)"
-        default: "https://www.youtube.com/watch?v=mCUppDwAlC8"
+        default: "https://www.youtube.com/watch?v=2EVMfSNWXwY"
       post:
         description: "ส่งโค้ดที่เจอเข้า Discord ด้วย (ใช้กับ test)"
         type: boolean
