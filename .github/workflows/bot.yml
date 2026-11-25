@@ -13,9 +13,9 @@ on:
         default: test
       url:
         description: "ลิงก์ไลฟ์เก่า (ใช้กับ test)"
-        default: "https://www.youtube.com/watch?v=fTLz4UO0q-I"
+        default: "https://www.youtube.com/watch?v=mCUppDwAlC8"
       post:
-        description: "ส่งโค้ดที่เจอเข้า Discord"
+        description: "ส่งโค้ดที่เจอเข้า Discord ด้วย (ใช้กับ test)"
         type: boolean
         default: true
 
@@ -66,9 +66,8 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           YT_COOKIES_FILE: cookies.txt
           GIT_PERSIST: "1"
+          SUMMARY: ${{ vars.SUMMARY }}
         run: python watcher.py watch --max-minutes 330
-      # GitHub's timer is unreliable, so each run starts the next one while streams may still be on
-      #   (watcher.py leaves a .continue file only when it ran out of time, never after a crash)
       - name: Keep watching (start next run)
         if: always() && hashFiles('.continue') != ''
         env:
@@ -107,6 +106,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           YT_COOKIES_FILE: cookies.txt
           GIT_PERSIST: "1"
+          SUMMARY: ${{ vars.SUMMARY }}
         run: python watcher.py rescan --max-minutes 330
 
   test:
