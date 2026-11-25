@@ -113,7 +113,7 @@ def extract_codes(lines):
         sure = score >= MIN_SCORE
         ctx = "CODE" in re.sub(r"[^A-Z]", "", up.replace("0", "O"))
         src = f"{line} ({score:.2f})"
-      
+
         for text in (up, re.sub(r"\s+", "", up)):
             for tok in re.split(r"[^A-Z0-9]+", text):
                 for c in CODE_RE.findall(tok):
@@ -326,7 +326,7 @@ def start_pipeline(url, outdir, errpath, attempt=0):
     y.stdout.close()
     errf.close()
     return y, f
-  
+
 class LinkExpired(Exception):
     pass
 
@@ -451,7 +451,7 @@ class Scan:
         self.sure = set()
         self.frames = 0
         self.err = ""
-        self.state =_load(video_file(self.vid)) or {
+        self.state = _load(video_file(self.vid)) or {
             "id": self.vid, "title": self.title, "start": self.start_ts,
             "codes": [], "ended": False, "rescanned": False}
 
@@ -525,8 +525,7 @@ class Scan:
         discord(content=f"{label}\n```\n{code}\n```",
                 embed={"description": f"[▶️ กดตรงนี้: ดูช่วงเวลาที่ไลฟ์แจกโค้ด]({link})\n"
                                       f"[🎁 กดตรงนี้: เข้าไปหน้าเติมโค้ด]({REDEEM_URL})",
-                       "color": 0xF5A623},
-                image=path)
+                       "color": 0xF5A623})
         discord(content=code)
 
 def run_frames(url, scan, offset_fn, deadline, attempt=0):
@@ -603,8 +602,6 @@ def watch_stream(info, deadline):
     scan = Scan(info, "live")
     if not os.path.exists(video_file(scan.vid)):
         _save(video_file(scan.vid), scan.state)
-        discord(embed={"title": "🔴 เริ่มไลฟ์แล้ว / บอทกำลังรอดูโค้ดจากไลฟ์ให้นะคะ", "color": 0xE02B2B,
-                       "description": f"**{scan.title}**\nhttps://youtu.be/{scan.vid}"})
         persist(f"live {scan.vid}")
     log("watching", scan.vid, scan.title)
     fails = 0
