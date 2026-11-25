@@ -55,7 +55,8 @@ jobs:
       - name: Install
         if: steps.check.outputs.run == 'yes'
         run: |
-          sudo apt-get install -y -qq ffmpeg libgl1 > /dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg libgl1 > /dev/null
           pip install -q -r requirements.txt
           pip install -q -U --pre "yt-dlp[default]"   # newest yt-dlp (incl. nightly): YouTube changes often
           git config user.name "github-actions[bot]"
@@ -92,7 +93,8 @@ jobs:
           deno-version: v2.x
       - name: Install
         run: |
-          sudo apt-get install -y -qq ffmpeg libgl1 > /dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg libgl1 > /dev/null
           pip install -q -r requirements.txt
           pip install -q -U --pre "yt-dlp[default]"   # newest yt-dlp (incl. nightly): YouTube changes often
           git config user.name "github-actions[bot]"
@@ -124,7 +126,8 @@ jobs:
           deno-version: v2.x
       - name: Install
         run: |
-          sudo apt-get install -y -qq ffmpeg libgl1 > /dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg libgl1 > /dev/null
           pip install -q -r requirements.txt
           pip install -q -U --pre "yt-dlp[default]"   # newest yt-dlp (incl. nightly): YouTube changes often
       - name: Optional YouTube cookies
