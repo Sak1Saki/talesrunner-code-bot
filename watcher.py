@@ -165,7 +165,6 @@ def _ocr_img(img, cut_top=False, cut_bottom=False):
 
 BANDS = ((0.0, 0.4), (0.3, 0.7), (0.6, 1.0))
 
-
 def ocr_lines(path):
     import cv2
     img = cv2.imread(path)
@@ -259,7 +258,6 @@ def key_error(err):
     lines = [l for l in err.splitlines() if l.strip()]
     important = [l for l in lines if "ERROR" in l]
     return "\n".join((important[-2:] + lines[-2:]) if important else lines[-4:])[-500:]
-
 
 def warn_blocked(err):
     global _warned_block
