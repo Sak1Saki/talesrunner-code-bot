@@ -497,7 +497,7 @@ class Scan:
     def publish(self, code, path, offset, wrong=None):
         when = datetime.fromtimestamp(self.start_ts + offset, ICT)
         log(f"CODE {code}  at {when:%H:%M} (+{hms(offset)})" + (f"  (correcting {wrong})" if wrong else ""))
-        label = {"live": "🎁 ไอเทมโค้ด", "rescan": "🔁 โค้ดที่ตกหล่น (สแกนย้อนหลัง)", "test": "🧪 ทดสอบ"}[self.mode]
+        label = {"live": "🎁 โค้ดใหม่", "rescan": "🔁 โค้ดที่ตกหล่น (สแกนย้อนหลัง)", "test": "🧪 ทดสอบ"}[self.mode]
         if wrong:
             label = f"✏️ แก้ไข: โค้ดที่ส่งไปก่อนหน้า `{wrong}` อ่านผิด ที่ถูกคือ"
         if self.mode == "test":
@@ -521,7 +521,12 @@ class Scan:
         persist(f"code {code}")
 
     def send(self, code, path, offset, when, label):
-        discord(content=f"{label}\n{code}")
+        link = f"https://youtu.be/{self.vid}?t={int(offset)}"
+        discord(content=f"{label}\n```\n{code}\n```",
+                embed={"description": f"[▶️ ดูไลฟ์]({link})\n"
+                                      f"[🎁 เติมโค้ด]({REDEEM_URL})",
+                       "color": 0xC3B1E1})
+        discord(content=code)
 
 def run_frames(url, scan, offset_fn, deadline, attempt=0):
     tmp = tempfile.mkdtemp(prefix="frames_")
